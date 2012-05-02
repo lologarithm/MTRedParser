@@ -23,6 +23,7 @@ namespace MTREDParser
     public partial class MainWindow : Window
     {
         public List<MTREDWorkerStats> StoredStats = new List<MTREDWorkerStats>();
+
         Thread t = null;
         CalculateStats cs = null;
 
@@ -38,24 +39,45 @@ namespace MTREDParser
 
         private void StartQuery_Click(object sender, RoutedEventArgs e)
         {
+            StartQuery.IsEnabled = false;
+            LoadData.IsEnabled = false;
+            StopButton.IsEnabled = true;
+
             if (APIKeyBox.Text == "")
                 APIKeyBox.Text = "2aab78a9691c0e2f2ce7425957de20dc";
 
-            cs = new CalculateStats(this);
+            if (cs == null)
+            {
+                cs = new CalculateStats(this);
+            }
 
             t = new Thread(cs.DoStats);
             t.Start(APIKeyBox.Text);
         }
 
-        public void AddListItem(List<MTREDWorkerStats> stats_list)
+        public void EmptyListBox()
         {
-            //StatsBox.Items.Clear();
+            StatsBox.Items.Clear();
+        }
 
-            foreach (MTREDWorkerStats stats in stats_list)
+        public void FillListBox(List<MTREDWorkerStats> stats_list)
+        {
+            foreach ( MTREDWorkerStats worker_stats in stats_list)
             {
-                StatItem si = new StatItem(stats.name, stats.mhash.ToString(), stats.rsolved.ToString());
-                StatsBox.Items.Add(si);
+                WorkerTotalControl worker_control = new WorkerTotalControl(worker_stats.name, worker_stats.rsolved);
+                StatsBox.Items.Add(worker_control);
             }
+        }
+
+        public void AddListBox(MTREDWorkerStats worker_stats)
+        {
+            WorkerTotalControl worker_control = new WorkerTotalControl(worker_stats.name, worker_stats.rsolved);
+            StatsBox.Items.Add(worker_control);
+        }
+
+        public void SetAPIBox(string value)
+        {
+            APIKeyBox.Text = value;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -64,6 +86,37 @@ namespace MTREDParser
                 cs.run = false;
             if ( t != null)
                 t.Join();
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            StatsBox.Height = ((Grid)sender).ActualHeight - 50;
+            StatsBox.Width = ((Grid)sender).ActualWidth;
+        }
+
+        private void LoadData_Click(object sender, RoutedEventArgs e)
+        {
+            LoadData.IsEnabled = false;
+
+            if ( cs == null )
+            cs = new CalculateStats(this);
+
+            Thread load_thread = new Thread(cs.LoadHistory);
+            load_thread.Start();
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            StopButton.IsEnabled = false;
+            
+            if (cs != null)
+                cs.run = false;
+            if (t != null)
+            {
+                t.Join();
+            }
+
+            StartQuery.IsEnabled = true;
         }
     }
 }

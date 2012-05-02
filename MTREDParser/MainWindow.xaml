@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:MTREDParser="clr-namespace:MTREDParser"
         Title="MainWindow" Height="350" Width="525" Closed="Window_Closed">
-    <Grid>  
+    <Grid SizeChanged="Grid_SizeChanged">  
         <TextBox Height="24" HorizontalAlignment="Left" Margin="66,20,0,0" Name="APIKeyBox" VerticalAlignment="Top" Width="218" />
-        <Button Content="Start" Height="24" HorizontalAlignment="Right" Margin="0,20,133,0" Name="StartQuery" VerticalAlignment="Top" Width="65" Click="StartQuery_Click" />
+        <Button Content="Start" Height="24" HorizontalAlignment="Right" Margin="0,20,142,0" Name="StartQuery" VerticalAlignment="Top" Width="65" Click="StartQuery_Click" />
+        <Button Content="Load" Height="24" HorizontalAlignment="Right" Margin="0,20,0,0" Name="LoadData" VerticalAlignment="Top" Width="65" Click="LoadData_Click" />
         <Label Content="API Key:" Height="32" HorizontalAlignment="Left" Margin="12,18,0,0" Name="label1" VerticalAlignment="Top" Width="63" />
-        <ListBox ScrollViewer.CanContentScroll="True" Height="265" HorizontalAlignment="Left" Margin="0,46,0,0" Name="StatsBox" VerticalAlignment="Top" Width="503">
+        <ListBox ScrollViewer.CanContentScroll="True" Height="260" HorizontalAlignment="Left" Margin="0,50,0,0" Name="StatsBox" VerticalAlignment="Top" Width="503">
         </ListBox>
+        <Button Content="Stop" IsEnabled="False" Height="24" HorizontalAlignment="Right" Margin="0,20,71,0" Name="StopButton" VerticalAlignment="Top" Width="65" Click="StopButton_Click" />
     </Grid>
 </Window>
