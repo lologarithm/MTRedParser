@@ -61,6 +61,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BitFloor\BidInfo.xaml.cs">
+      <DependentUpon>BidInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BitFloor\BitFloorStats.cs" />
+    <Compile Include="BitFloor\Tick.cs" />
     <Compile Include="SerializerUtilities.cs" />
     <Compile Include="SolvedBlock.cs" />
     <Compile Include="SolvedBlockItem.xaml.cs">
@@ -69,6 +74,10 @@
     <Compile Include="WorkerTotalControl.xaml.cs">
       <DependentUpon>WorkerTotalControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="BitFloor\BidInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

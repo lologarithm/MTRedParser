@@ -24,7 +24,8 @@ namespace MTREDParser
         private long previous_data_history = 0;
 
         public bool run = true;
-        
+
+        public Timer StatTimer = null;
 
         public CalculateStats(MainWindow i_window)
         {
@@ -35,7 +36,7 @@ namespace MTREDParser
         {
             this.APIKey = (string)api_key;
 
-            while (run)
+            if (run)
             {
                 // 1. Get list of solved blocks
 
@@ -90,11 +91,11 @@ namespace MTREDParser
                 data_history.Add(current_time, worker_stats);
                 previous_data_history = current_time;
 
-                Thread.Sleep(60000);
+                //Timer stat_timer = new Timer(
+                //Thread.Sleep(60000);
             }
-
-            SaveHistory();
-
+            else
+                SaveHistory();
         }
 
 
